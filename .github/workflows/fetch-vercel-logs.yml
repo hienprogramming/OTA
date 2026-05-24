@@ -1,0 +1,46 @@
+name: Fetch Vercel Logs
+
+on:
+  # Trigger after deployment (manual trigger)
+  workflow_dispatch:
+  
+  # Or trigger on push to main (when Vercel redeploys)
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'Log/**'
+      - '.github/**'
+
+jobs:
+  fetch-logs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Wait for Vercel deployment
+        run: sleep 30  # Wait 30 seconds for deployment to complete
+
+      - name: Fetch Vercel logs
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_TEAM_ID: ${{ secrets.VERCEL_TEAM_ID }}
+        run: python fetch_vercel_logs.py
+
+      - name: Commit logs to repository
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add Log/
+          git commit -m "ci: add Vercel deployment logs" || echo "No changes to commit"
+          git push
