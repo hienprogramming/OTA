@@ -21,7 +21,7 @@ Prototype cập nhật firmware cho Vehicle thông qua Cloud, phù hợp deploy 
 Máy cần có Node.js 20+.
 
 ```bash
-cd C:\Working\AutoSar\OTA
+CD C:\Working\AutoSar\OTA_PJ
 npm install
 npm run dev
 ```
@@ -38,6 +38,38 @@ Khi deploy lên Vercel:
 
 ```bash Real
 python simulator/gateway_ecu_simulator.py --cloud-url https://your-project.vercel.app
+```
+
+## Chay Gateway ECU simulator bang C
+
+Ban C phu hop hon voi huong AUTOSAR Classic/embedded gateway ECU. Code nam o:
+
+```text
+simulator/gateway_ecu_simulator.c
+```
+
+Build tren Windows voi MinGW:
+
+```bash
+gcc simulator/gateway_ecu_simulator.c -o gateway_ecu_simulator_c.exe -lm
+```
+
+Chay local:
+
+```bash
+.\gateway_ecu_simulator_c.exe --cloud-url http://localhost:3000
+```
+
+Chay voi Vercel:
+
+```bash
+.\gateway_ecu_simulator_c.exe --cloud-url https://your-project.vercel.app
+```
+
+Neu Vercel deployment dang bat Deployment Protection, tao Automation Bypass Secret tren Vercel va chay:
+
+```bash
+.\gateway_ecu_simulator_c.exe --cloud-url https://your-project.vercel.app --bypass-secret YOUR_SECRET
 ```
 
 ## Deploy Vercel Real
