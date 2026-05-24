@@ -60,3 +60,7 @@ Bản demo dùng in-memory store để dễ chạy trên Vercel serverless. Khi 
 - Digital signature bằng private key offline và verify bằng public key trong Gateway.
 - Device authentication bằng certificate hoặc token riêng cho từng vehicle.
 - Rollback policy, A/B partition, battery/network precondition và audit log bất biến.
+
+
+# Create prj with Vercel
+https://www.youtube.com/watch?v=UqQl5RrK6to

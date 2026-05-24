@@ -262,7 +262,7 @@ function JobItem({ job, firmware }: { job: OtaJob; firmware?: FirmwareVersion })
   return (
     <article className="item">
       <div>
-        <strong>{job.vehicleId} -> {firmware?.version ?? job.firmwareId}</strong>
+        <strong>{job.vehicleId} → {firmware?.version ?? job.firmwareId}</strong>
         <span>{job.message ?? "No message"}</span>
       </div>
       <span className={`pill ${statusClass(job.status)}`}>{job.status}</span>
